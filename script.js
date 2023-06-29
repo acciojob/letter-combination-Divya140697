@@ -2,10 +2,9 @@ function letterCombinations(digits) {
   if (digits.length === 0) {
     return [];
   }
-
-  const digitMap = {
-    '0': '0',
-    '1': '1',
+  
+  // Mapping of digits to letters
+  const digitToLetters = {
     '2': 'abc',
     '3': 'def',
     '4': 'ghi',
@@ -15,19 +14,17 @@ function letterCombinations(digits) {
     '8': 'tuv',
     '9': 'wxyz'
   };
-
-  const combinations = [''];
-  for (let i = 0; i < digits.length; i++) {
-    const digit = digits[i];
-    const letters = digitMap[digit];
-    const tempCombinations = [];
-    for (let j = 0; j < combinations.length; j++) {
-      for (let k = 0; k < letters.length; k++) {
-        tempCombinations.push(combinations[j] + letters[k]);
-      }
-    }
-    combinations.splice(0, combinations.length, ...tempCombinations);
-  }
-
+  
+  const combinations = [];
+  backtrack('', digits);
   return combinations;
-}
+  
+  function backtrack(combination, nextDigits) {
+    if (nextDigits.length === 0) {
+      combinations.push(combination);
+      return;
+    }
+    
+   // const currentDigit = nextDigits[0];
+   // const letters = digitToLetters[currentDigit];
+    
