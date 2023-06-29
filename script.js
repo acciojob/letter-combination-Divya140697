@@ -1,5 +1,9 @@
 function letterCombinations(digits) {
-  const digitToLetters = {
+  if (digits.length === 0) {
+    return [];
+  }
+
+  const digitMap = {
     '0': '0',
     '1': '1',
     '2': 'abc',
@@ -9,34 +13,21 @@ function letterCombinations(digits) {
     '6': 'mno',
     '7': 'pqrs',
     '8': 'tuv',
-    '9': 'wxyz',
+    '9': 'wxyz'
   };
 
-  const combinations = [];
-
-  if (digits.length === 0) {
-    return combinations;
+  const combinations = [''];
+  for (let i = 0; i < digits.length; i++) {
+    const digit = digits[i];
+    const letters = digitMap[digit];
+    const tempCombinations = [];
+    for (let j = 0; j < combinations.length; j++) {
+      for (let k = 0; k < letters.length; k++) {
+        tempCombinations.push(combinations[j] + letters[k]);
+      }
+    }
+    combinations.splice(0, combinations.length, ...tempCombinations);
   }
-
-  backtrack('', digits);
 
   return combinations;
-
-  function backtrack(combination, nextDigits) {
-    if (nextDigits.length === 0) {
-      combinations.push(combination);
-      return;
-    }
-
-    const currentDigit = nextDigits[0];
-    const letters = digitToLetters[currentDigit];
-
-    for (let i = 0; i < letters.length; i++) {
-      const letter = letters[i];
-      backtrack(combination + letter, nextDigits.slice(1));
-    }
-  }
 }
-
-// Test case
- // Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
